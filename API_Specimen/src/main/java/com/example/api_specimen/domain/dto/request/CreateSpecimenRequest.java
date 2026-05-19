@@ -1,4 +1,4 @@
-package com.example.api_specimen.domain.request;
+package com.example.api_specimen.domain.dto.request;
 
 import com.example.api_specimen.common.validation.UniqueSpecimenName;
 import jakarta.validation.constraints.NotBlank;

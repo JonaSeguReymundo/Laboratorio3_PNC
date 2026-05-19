@@ -1,4 +1,4 @@
-package com.example.api_specimen.domain.request;
+package com.example.api_specimen.domain.dto.request;
 
 import lombok.*;
 
