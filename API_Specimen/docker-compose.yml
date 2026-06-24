@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: specimen-postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432" # Redirecciona al 5433 local para evitar choques con otros Postgres
+    volumes:
+      - postgres_specimen_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - specimen-network
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: specimen-api
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy # Espera a que Postgres acepte conexiones antes de iniciar la API
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - specimen-network
+
+volumes:
+  postgres_specimen_data:
+    driver: local
+
+networks:
+  specimen-network:
+    driver: bridge
