@@ -27,6 +27,6 @@ jobs:
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw
 
-      # 4. Compilar y ejecutar las pruebas unitarias aisladas con Mockito
+      # 4. Compilar y ejecutar las pruebas unitarias aisladas con Mockito.
       - name: Run Unit Tests with Maven
         run: ./mvnw clean test
