@@ -22,11 +22,15 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
+          # Le indicamos a la caché de Maven dónde está el pom.xml
+          cache-dependency-path: 'API_Specimen/pom.xml'
 
-      # 3. Darle permisos de ejecución al Maven Wrapper
+      # 3. Darle permisos de ejecución al Maven Wrapper apuntando a la subcarpeta
       - name: Grant execute permission for mvnw
         run: chmod +x mvnw
+        working-directory: API_Specimen
 
-      # 4. Compilar y ejecutar las pruebas unitarias aisladas con Mockito.
+      # 4. Compilar y ejecutar las pruebas unitarias aisladas con Mockito en la subcarpeta
       - name: Run Unit Tests with Maven
         run: ./mvnw clean test
+        working-directory: API_Specimen
