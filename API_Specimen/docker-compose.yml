@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5432" # Redirecciona al 5433 local para evitar choques con otros Postgres de la PC
+      - "5433:5432" # Redirecciona al 5433 local para evitar choques con otros Postgres
     volumes:
       - postgres_specimen_data:/var/lib/postgresql/data
     healthcheck:
